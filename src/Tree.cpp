@@ -1,6 +1,6 @@
-#include "Tree.hpp"
+#include "Passenger.hpp"
 
-Tree* createNode(passenger p, Tree* node) {
+Tree* createNode(Tree* node,passenger* p) {
     if (node == nullptr)
     {
         Tree* newNode = new Tree;
@@ -15,12 +15,12 @@ Tree* createNode(passenger p, Tree* node) {
     return node;
 }
 
-void condition(Tree*& root, passenger* p)
+Tree* condition(Tree* root, passenger* p)
 {
     if (root == nullptr)
     {
-        root = createNode(*p, nullptr);
-        return;
+        root = createNode(nullptr,p);
+        return root;
     }
     if (p->getGender() == tolower('f'))
     {
@@ -28,20 +28,20 @@ void condition(Tree*& root, passenger* p)
         {
             if (p->getName()[0] >= tolower('a') && p->getName()[0] < tolower('m'))
             {
-                root->passengerList[0].push_back(*p);
+                root->passengerList[0].push_back(p);
             }else
             {
-                root->passengerList[1].push_back(*p);
+                root->passengerList[1].push_back(p);
             }
             
         }else
         {
             if (p->getName()[0] >= tolower('a') && p->getName()[0] < tolower('m'))
             {
-                root->passengerList[2].push_back(*p);
+                root->passengerList[2].push_back(p);
             }else
             {
-                root->passengerList[3].push_back(*p);
+                root->passengerList[3].push_back(p);
             }
         }
     }else
@@ -50,29 +50,30 @@ void condition(Tree*& root, passenger* p)
         {
             if (p->getName()[0] >= tolower('a') && p->getName()[0] < tolower('m'))
             {
-                root->passengerList[4].push_back(*p);
+                root->passengerList[4].push_back(p);
             }else
             {
-                root->passengerList[5].push_back(*p);
+                root->passengerList[5].push_back(p);
             }
             
         }else
         {
             if (p->getName()[0] >= tolower('a') && p->getName()[0] < tolower('m'))
             {
-                root->passengerList[6].push_back(*p);
+                root->passengerList[6].push_back(p);
             }else
             {
-                root->passengerList[7].push_back(*p);
+                root->passengerList[7].push_back(p);
             }
         }
     }
+    return root;
 }
 
 
 Tree* insert(Tree* root, passenger* p)
 {
-    condition(root,p);
+    root=condition(root,p);
     return root;
 }
 

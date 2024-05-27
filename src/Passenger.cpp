@@ -1,5 +1,9 @@
 #include"Passenger.hpp"
 
+using namespace std;
+
+int passenger::counter = 0; // Initialize static member variable
+
 // get particular passenger details
 
 passenger* getPassenger(Tree* root, int passengerId)
@@ -11,11 +15,11 @@ passenger* getPassenger(Tree* root, int passengerId)
 
     for (int i = 0; i < 8; i++)
     {
-        for (const auto& passengers : root->passengerList[i])
+        for (auto passengers : root->passengerList[i])
         {
-            if (passengers.getPassengerId() == passengerId)
+            if (passengers->getPassengerId() == passengerId)
             {
-                return const_cast<passenger*>(&passengers);
+               return passengers;
             }
         }
     }
@@ -36,14 +40,17 @@ void printUserDetails(Tree* node)
     {
         for (int j = 0; j < node->passengerList[i].size(); j++)
         {
-            cout << node->passengerList[i][j].getPassengerId() << " ";
-            cout << node->passengerList[i][j].getName() << " ";
-            cout << node->passengerList[i][j].getAge() << " ";
-            cout << node->passengerList[i][j].getGender() << " ";
-            cout << node->passengerList[i][j].getUsername() << " ";
-            cout << node->passengerList[i][j].getPassword() << endl;
+            cout << node->passengerList[i][j]->getPassengerId() << " ";
+            cout << node->passengerList[i][j]->getName() << " ";
+            cout << node->passengerList[i][j]->getAge() << " ";
+            cout << node->passengerList[i][j]->getGender() << " ";
+            cout << node->passengerList[i][j]->getUsername() << " ";
+            cout << node->passengerList[i][j]->getPassword() << endl;
         }
     }
     printUserDetails(node->left);
     printUserDetails(node->right);
-}   
+} 
+
+
+  

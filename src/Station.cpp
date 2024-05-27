@@ -1,4 +1,5 @@
-#include "Station.hpp"
+/*
+#include "Train.hpp"
 
 void betweenStations(Train* train)
 {
@@ -19,26 +20,10 @@ void allStations()
     {
         for(auto& s : t.getRoute())
         {
-            cout <<stationNo++"."<<s.stationName << endl;
+            cout <<stationNo++<<"."<<s.stationName << endl;
         }
     }
 }
 
+*/
 
-// return the  particular station
-stations* returnStation(int no)
-{
-    stationNo = 1;
-    for(auto& t : trainList)
-    {
-        for(auto& s : t.getRoute())
-        {
-            if (stationNo++ == no)
-            {
-                return s;
-            }
-            
-        }
-    }
-    return nullptr;
-}

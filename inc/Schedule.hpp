@@ -1,9 +1,9 @@
 #ifndef SCHEDULE
 #define SCHEDULE
 
-#include "Main.hpp"
-
-void schedule(Schedule s);
+#include <string>
+#include <iostream>
+using namespace std;
 
 class Schedule 
 {
@@ -12,14 +12,14 @@ private:
     string arrivedTime;
 
 public:
-    Schedule(const string& depTime, const string& arrTime)
+    Schedule(string depTime,string arrTime)
         : departureTime(depTime), arrivedTime(arrTime) {}
-    Schedule(Schedule s)
+    Schedule(Schedule* s)
     {
-        this->arrivedTime = s.arrivedTime;
-        this->departureTime = s.departureTime;
+        this->arrivedTime = s->arrivedTime;
+        this->departureTime = s->departureTime;
     }
-
+	Schedule(){}
     string getDepartureTime()
     { 
     	return departureTime;
@@ -29,5 +29,7 @@ public:
     	return arrivedTime;
     }
 };
+
+void schedule(Schedule s);
 
 #endif 

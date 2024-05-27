@@ -12,7 +12,7 @@ OBJS = $(SRCS:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 
 INCDIR = inc
 
-EXEC = train
+EXEC = run
 
 all : clean $(EXEC)
 

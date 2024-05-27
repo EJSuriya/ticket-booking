@@ -1,15 +1,12 @@
 #ifndef PASSENGER
 #define PASSENGER
 
-#include "Main.hpp"
-#include "Tree.hpp"
-
-// Function prototype for getting particular passenger details
-passenger* getPassenger(Tree* root, int passengerId);
-
-// Function prototype for printing user details
-void printUserDetails(Tree* node);
-
+//#include "Main.hpp"
+//#include "Tree.hpp"
+#include <string>
+#include<iostream>
+#include <vector>
+using namespace std;
 
 class passenger 
 {
@@ -54,6 +51,38 @@ public:
     }
 };
 
-int passenger::counter = 0; // Initialize static member variable
+//
+
+struct Tree {
+    vector<passenger*> passengerList[8];
+    Tree* left;
+    Tree* right;
+};
+
+static Tree* root=nullptr;
+
+// Function prototype for creating a new node
+Tree* createNode(Tree* root, passenger* p);
+
+// Function prototype for determining the insertion condition based on passenger details
+Tree* condition(Tree* root, passenger* p);
+
+// Function prototype for inserting a passenger into the tree
+Tree* insert(Tree* root, passenger* p);
+
+
+
+
+//
+
+
+
+// Function prototype for getting particular passenger details
+passenger* getPassenger(Tree* root, int passengerId);
+
+// Function prototype for printing user details
+void printUserDetails(Tree* node);
+
+
 
 #endif

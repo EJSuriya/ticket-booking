@@ -1,7 +1,13 @@
 #ifndef TREE
 #define TREE
-
-#include "Main.hpp"
+/*
+#include "Passenger.hpp"
+//#include <vector>
+struct Tree {
+    vector<passenger> passengerList[8];
+    Tree* left;
+    Tree* right;
+};
 
 // Function prototype for creating a new node
 Tree* createNode(passenger p, Tree* node);
@@ -12,12 +18,8 @@ void condition(Tree*& root, passenger* p);
 // Function prototype for inserting a passenger into the tree
 Tree* insert(Tree* root, passenger* p);
 
-struct Tree {
-    vector<passenger> passengerList[8];
-    Tree* left;
-    Tree* right;
-};
 
 
+*/
 
 #endif

@@ -1,14 +1,15 @@
 #include "Class.hpp"
+//#include "Main.hpp"
 
-void addClassType(const ClassType& classType) 
+void addClassType(ClassType* classType) 
 {
-    classes.push_back(classType);
+    classTypes.push_back(classType);
 }
 
 
 void classDetails(ClassType* c)
 {
-    cout << "Class Name : " << c->className << endl;
-    cout << "Class Capacity : "<< c->capacity << endl;
-    cout << "Class price per km : " << c->price << endl;
+    cout << "Class Name : " << c->getClassName() << endl;
+    cout << "Class Capacity : "<< c->getCapacity()<< endl;
+    cout << "Class price per km : " << c->getPrice() << endl;
 }

@@ -1,210 +1,207 @@
 #include "Ticket.hpp"
+#include "Train.hpp"
 
+using namespace std;
+/*
 bool isSeatAvailable(int seatNumber, bool array[], int maxSize) 
 {
-    if (seatNumber < 1 || seatNumber > maxSize) 
+    if (array[seatNumber - 1==1]&&(seatNumber > 1 || seatNumber < maxSize)) 
     {
-        cout << "Invalid seat number" << endl;
-        return false;
+        //cout << "Invalid seat number" << endl;
+        return true;
     }
-    return array[seatNumber - 1]
+    //return array[seatNumber - 1]
+    return false;
 }
+*/
 
+bool isSeatAvailable(Train* train,int seatNumber, string name) 
+{
+    if (name=="AC" && train->acArray[seatNumber]==true && seatNumber >=0 && seatNumber <100) 
+    {
+    	cout<<"SEAT IS AVAILABLE"<<endl;
+        return true;
+    }
+    else if (name=="sleeper" && train->sleeperArray[seatNumber]==true && seatNumber >=0 && seatNumber <100) 
+    {
+    	cout<<"SEAT IS AVAILABLE"<<endl;
+        return true;
+    }
+    else if (name=="ladies" && train->ladiesArray[seatNumber]==true && seatNumber >=0 && seatNumber <100) 
+    {
+    	cout<<"SEAT IS AVAILABLE"<<endl;
+        return true;
+    }
+    else if (name=="sitting" && train->sittingArray[seatNumber]==true && seatNumber >=0 && seatNumber <100) 
+    {
+    	cout<<"SEAT IS AVAILABLE"<<endl;
+        return true;
+    }
+    else
+    {
+    	return false;
+    } 
+    return false;
+}
 void printTicketDetails(int id,Tree* root)
 {
-    int trainId = ticketMappings[id].first;
-    int passengerId = ticketMappings[id].second;
-    Train* train = nullptr
-    passenger* p = nullptr;
-    if (ticketMappings.find(id) != ticketMappings.end())
+	if(id==0)
+	{
+		cout<<"ENTER THE TICKET NUMBER :"<<endl;
+		int id;
+		cin>>id;
+	}
+	bool present=false;
+	for (auto it: ticketMappings)
+	{
+		if(it.first->getTicketId()==id)
+		{
+			present=true;
+			cout << "Ticket ID: " << it.first->getTicketId() << endl;
+        	cout << "Train Name: " << it.second.first->getTrainName() << endl;
+        	cout << "Source STATION ID: " << it.first->getSourceNo() << endl;
+        	cout << "Destination STATION ID: " << it.first->getDestinationNo() << endl;
+        	cout << "CLASS TYPE :"<< it.first->getClassName() << endl;
+        	cout << "SEAT NUMBER :"<< it.first->getSeatNumber() << endl;
+        	cout << "Passenger Name: " << it.second.second->getName() << endl;
+		}
+	}
+    if (!present)
     {
-        for(auto & t : trainList)
-        {
-            if (t.getTrainId() == trainId)
-            {
-                train = &t;
-                break;
-            }
-        }
-
-         p = getPassenger(root,passengerId);
-    }
-
-    if (train != nullptr && p != nullptr)
-    {
-        cout << "Ticket ID: " << id << endl;
-        cout << "Train Name: " << train->getTrainName() << endl;
-        cout << "Source: " << train->getSource() << endl
-        cout << "Destination: " << train->getDestination() << endl;
-        cout << "Passenger Name: " << p->getName() << endl;
-    }else
-    {
-        cout << "ticket details not found"<< endl
+    	//semicolon error
+        cout << "ticket details not found"<< endl;
     }
 }
 
-double calculateTicketFare(Train* train)
+void setArrayValue(void* array, int index, bool value, int capacity) {
+    if (index < 0 || index >= capacity) 
+    {
+        cout << "Invalid index" << endl;
+        return;
+    }
+    static_cast<bool*>(array)[index] = value;
+}
+
+/*
+void fill_array()
 {
-    int sno;
-    int dno;
-    allStations();
-    cout << "enter source location number " << endl;
-    cin >> sno
-    allStations();
-    cout << "enter destination number " << endl;
-    cin >> dno;
-    string source;
-    string destination;
-    source = returnStation(sno)->stationName;
-    destination = returnStation(dno)->stationName
-    string className;
-    cout << "enter the class name " << endl;
-    cin >> className;
-    double distance;
-    int start = -1;
-    int end = -1;
-    for (int i = 0; i < train->getRoute().size(); i++)
-    {
-        if (train->getRoute()[i].stationName == source)
-        {
-            start = i;            
-        }else if (train->getRoute()[i].stationName = destination)
-        {
-            end = i;
-        }
-        if (end != -1 && start != -1)
-        {
-            break;
-        }  
-    }
-    
-    for (int i = start+1; i <= end i++)
-    {
-        distance += train->getRoute()[i].distanceFromPrevious;
-    }
-    double fare;
-    for(auto& c : train->getClasses())
-    {
-        if (c.className == className)
-        {
-            fare = distance * c.price;
-        }
-        
-    }
+	fill(acArray, acArray + 100, true);
+	fill(sleeperArray, sleeperArray + 100, true);
+	fill(ladiesArray, ladiesArray + 100, true);
+	fill(sittingArray, sittingArray + 100, true);
 
-    return fare;
 }
-
+*/
 int acCapacity;
-int ladiesCapacity
+int ladiesCapacity;
 int sleeperCapacity;
 int sittingCapacity;
 
-vector<vector<bool>> ticketBooking(Tree* root)
+
+void change_seat_status(Train* train,string name,int seatNo)
+{
+	if(name=="AC")
+	{
+		cout<<"a"<<endl;
+		train->acArray[seatNo - 1]=false;
+	}
+	else if(name=="sleeper")
+	{cout<<"b"<<endl;
+		train->sleeperArray[seatNo - 1]=false;
+	}
+	else if(name=="ladies")
+	{cout<<"c"<<endl;
+		train->ladiesArray[seatNo - 1]=false;
+	}
+	else 
+	{cout<<"d"<<endl;
+		train->sittingArray[seatNo - 1]=false;
+	}
+}
+
+
+void ticketBooking(Tree* root)
 {
     vector<vector<bool>> ticketArray;
-    vector<Train*> availableTrains;
-    availableTrains = searchTrainAdvanced();
+    int s=0,d=0;
+    string da;
+    availableTrains = searchTRainAdvanced(&s,&d,&da);
     int trainNo = 1;
-    for(auto& t : availableTrains)
+    label:
+    for(auto t : availableTrains)
     {
-        cout <<"Train Number : "<< trainNo++ << endl;
+        //cout <<"Train Number : "<< trainNo++ << endl;
         trainDetails(t);
     }
-    cout << "select the train number " << endl;
+    cout << "ENTER THE TRAIN ID: " << endl;
     int tno;
     cin >>tno;
-    Train* train = nullptr;
-    map<Ticket*, pair<Train*, Passenger*>> ticketMappings;
-    int i = 0
-    for(auto& t : availableTrains)
+    //semicolon error
+    int i = 0;
+    bool present=false;
+    for(auto t : availableTrains)
     {
-        if(availableTrains[i++] == tno-1)
+        if(t->get_train_id()==tno)
         {
+        	present=true;
             train = t;
         }
     }
-
-    double totalAmount = 0.0;
-    for(auto& c : train->getClasses())
+    if(!present)
     {
-        if (c.className == "ac")
+    	cout<<"!!!INCORRECT TRAIN ID!!!"<<endl;
+    	goto label;
+    }
+    double totalAmount = 0.0;
+    for(auto c : train->getClasses())
+    {
+        if (c->getClassName() == "AC")
         {
-            acCapacity = c.capacity;
+            acCapacity = c->getCapacity();
         }
-        if (c.className == "sleeper")
+        if (c->getClassName() == "sleeper")
         {
-            sleeperCapacity = c.capacity
+        	//semicolon error
+            sleeperCapacity = c->getCapacity();
         }
-        if (c.className == "ladies")
+        if (c->getClassName() == "ladies")
         {
-            ladiesCapacity = c.capacity;
+            ladiesCapacity = c->getCapacity();
         }
-        if (c.className == "sitting")
+        if (c->getClassName()== "sitting")
         {
-            sittingCapacity = c.capacity;
+            sittingCapacity = c->getCapacity();
         }
     }
 
-    bool acArray[acCapacity];
-    bool ladiesArray[ladiesCapacity];
-    bool sleeperArray[sleeperCapacity]
-    bool sittingArray[sittingCapacity];
-
-    fill(acArray, acArray + acCapacity, true);
-    fill(sleeperArray, sleeperArray + sleeperCapacity, true)
-    fill(ladiesArray, ladiesArray + ladiesCapacity, true);
-    fill(sittingArray, sittingArray + sittingCapacity, true);
-
-redo:
+	
+    
+label1:
     string className;
-    cout << "enter the class type (ac,sleeper,sitting,ladies)" << endl;
+    cout << "enter the class type (AC,sleeper,sitting,ladies)" << endl;
     cin >> className;
     ClassType* classType = nullptr;
     bool isClassAvailable = false;
-    for(auto& c : train->getClasses())
+    for(auto c : train->getClasses())
     {
-        if (c.className == className)
+        if (c->getClassName() == className)
         {
-            classType = &c;
+            classType = c;
             break;
         }
     }
     classDetails(classType);
 
     int seatNo;
-    int selectedCapacity
-    bool* selectedArray;
+    //semicolon error
+    int selectedCapacity;
+   //	void* selectedArray=nullptr;
+   	int array=0;
     bool seatAvailable = false;
     cout << "Enter the seat number : " << endl;
     cin >> seatNo;
-
-    if (className == "ac")
-    {
-        selectedCapacity = acCapacity;
-        selectedArray = acArray;
-        seatAvailable = isSeatAvailable(seatNo, selectedArray, selectedCapacity)
-    }
-    else if (className == "sleeper")
-    {
-        selectedCapacity = sleeperCapacity;
-        selectedArray = sleeperArray;
-        seatAvailable = isSeatAvailable(seatNo, selectedArray, selectedCapacity);
-    }
-    else if (className == "ladies")
-    {
-        selectedCapacity = ladiesCapacity;
-        selectedArray = ladiesArray
-        seatAvailable = isSeatAvailable(seatNo, selectedArray, selectedCapacity);
-    }
-    else if (className == "sitting")
-    {
-        selectedCapacity = sittingCapacity;
-        selectedArray = sittingArray;
-        seatAvailable = isSeatAvailable(seatNo, selectedArray, selectedCapacity);
-    }
-
-    bool isConfirm;
+    seatAvailable=isSeatAvailable(train,seatNo-1, className);
+    bool isConfirm=false;
     if (seatAvailable)
     {
         string confirmation;
@@ -221,40 +218,188 @@ redo:
     }
     else
     {
-        cout << "seat is already booked, please select any other seat " << endl;
+    	bool possible=false;
+    	for(auto it :ticketMappings)
+    	{
+    		if(it.first->getSeatNumber()==seatNo && it.first->getClassName()==className)
+    		{
+    			if(it.first->getSourceNo()>=d || it.first->getDestinationNo()<=s)
+    			{
+    				isConfirm = true;
+    				possible=true;
+    			}
+    		}
+    	}
+    	if(!possible)
+    	{
+        	cout << "seat is already booked, please select any other seat " << endl;
+        	cout<<"PRESS 1 TO AGAIN START BOOKING TICKET OR 0 TO GO TO MAIN PAGE :"<<endl;
+        	int opt;
+        	cin>>opt;
+        	if(opt==1)
+        	{
+        		goto label1;
+        	}
+        	else
+        		return;
+        }
     }
 
     double amountPayable;
-    Passenger* p = nullptr;
+    passenger* p = nullptr;
     if (isConfirm)
     {
-        totalAmount += calculateTicketFare(train)
-        selectedArray[seatNo-1] = false;
-
+    	//semicolon error
+        totalAmount += calculateJourneyFare(train,s,d,className);
+        //cout<<"THE TOTAL FARE AMOUNT IS : "<<totalAmount<<endl;
         int passengerId;
         cout << "enter your passenger id " << endl;
         cin >> passengerId;
         p = getPassenger(root, passengerId);
-        Ticket* t = new Ticket(train->getTrainId(), p->getPassengerId());
-        for(auto& c : train->getClasses())
+        Ticket* t = new Ticket(train->get_train_id(), p->getPassengerId(),s,d,seatNo,className,da);
+        for(auto c : train->getClasses())
         {
-            if (c.className == "ac")
+            if (c->getClassName() == className)
             {
-                acCapacity--;
-            }else if (c.className == "sleeper")
-            {
-                sleeperCapacity--;
+                //c->decrease_count();
+                ticketMappings.insert({t, make_pair(train,p)});
+                //setArrayValue(selectedArray, seatNo - 1, false, selectedCapacity);
+                
+                change_seat_status(train,className,seatNo);
+                cout<<"TICKET BOOKED SUCCESSFULLY"<<endl;
+                user_history(p);
             }
-            else if (c.className == "ladies")
-            {
-                ladiesCapacity--;
-            }
-            else if (c.className == "sitting")
-            {
-                sittingCapacity--;
-                break;
-            }
-
         }
     }
 }
+
+void reset_status(Train* train,int seatNo,string name)
+{
+	if(name=="AC")
+	{
+		train->acArray[seatNo - 1]=true;
+	}
+	else if(name=="sleeper")
+	{
+		train->sleeperArray[seatNo - 1]=true;
+	}
+	else if(name=="ladies")
+	{
+		train->ladiesArray[seatNo - 1]=true;
+	}
+	else 
+	{
+		train->sittingArray[seatNo - 1]=true;
+	}
+}
+
+
+void cancelTicket(Tree* root)
+{
+    int id,start,end,count=0,seatNumber;
+    string className;
+    cout << "please enter your ticket id " << endl;
+    cin >> id;
+    /*cout <<"ENTER YOUR STARTING STATION NUMBER :" <<endl;
+    cin >>start;
+    cout <<"ENTER YOUR DESTINATION STATION NUMBER :" <<endl;
+    cin >>end;*/
+    printTicketDetails(id,root);
+    string choice;
+    cout << "do you want to cancel the ticket " << endl;
+    cin >> choice;
+    if(choice == "yes")
+    {
+    	for (auto iterator : ticketMappings)
+    	{
+    		if (iterator.first->getTicketId() == id )
+    		{
+    			className = iterator.first->getClassName();
+    			seatNumber = iterator.first->getSeatNumber();
+    		}
+    	}
+    	for (auto iterator1 : ticketMappings)
+    	{
+    		if(iterator1.first->getClassName() == className && iterator1.first->getSeatNumber() == seatNumber)
+    		{
+    			++count;
+    		}
+    	}
+	 	auto it = ticketMappings.begin();
+   		for (; it != ticketMappings.end(); ++it) 
+    	{
+       		if (it->first->getTicketId() == id) 
+       		{
+       			if(count == 1)
+       			{
+       				reset_status(train,seatNumber,className);
+       			}
+           		delete it->first; 
+           		ticketMappings.erase(it);
+           		cout << "Ticket with ID " << id << " has been removed." << endl;
+           		return;
+     		}
+    	}
+    }
+}
+
+
+
+
+void user_history(passenger * p)
+{
+	bool present=true;
+	for (auto it: ticketMappings)
+	{
+		if(it.first->getPassengerId()==p->getPassengerId())
+		{
+			present=false;
+			cout<<"---------------------------------------------------------"<<endl;
+			cout << "Ticket ID: " << it.first->getTicketId() << endl;
+        	cout << "Train Name: " << it.second.first->getTrainName() << endl;
+        	cout << "DATE : " << it.second.first->getDate()<<endl;
+        	cout << "Source STATION ID: " << it.first->getSourceNo() << endl;
+        	cout << "Destination STATION ID: " << it.first->getDestinationNo() << endl;
+        	cout << "CLASS TYPE :"<< it.first->getClassName() << endl;
+        	cout << "SEAT NUMBER :"<< it.first->getSeatNumber() << endl;
+        	cout << "Passenger Name: " << it.second.second->getName() << endl;
+        	cout<<"---------------------------------------------------------"<<endl;
+		}
+	}
+	if(present)
+	{
+		cout<<"USER HASN'T BOOKED ANY TICKET"<<endl;
+		return;
+	}
+}
+
+void specific_seat_details()
+{
+	int seatNo,tno;
+	string name,date;
+	bool available=true;
+	cout << "ENTER THE TRAIN ID: " << endl;
+    cin >>tno;
+    cout << "ENTER THE DATE IN WHICH YOU WANT TO CHECK:"<<endl;
+    cin>>date;
+    cout<<"ENTER THE CLASS TYPE:"<<endl;
+	cin>>name;
+	cout<<"ENTER THE SEAT NUMBER YOU WANT TO CHECK:"<<endl;
+	cin>>seatNo;
+	for(auto it :ticketMappings)
+	{
+		if(it.first->getTrainId()==tno && it.first->getClassName()==name && it.first->getSeatNumber() && it.first->getDate()==date)
+		{
+			available=false;
+			printTicketDetails(it.first->getTicketId(),root);
+			cout<<"----------------------------------------------"<<endl;
+		}
+	}
+
+	if(available)
+	{
+		cout<<"EITHER THE ENTERED DEATILS ARE WRONG OR THE SEAT IS NOT BOOKED AND IS AVAILABLE"<<endl;
+	}
+
+}
+

@@ -1,6 +1,6 @@
 #ifndef STATION
 #define STATION
-
+/*
 #include "Main.hpp"
 
 #include "Train.hpp" 
@@ -25,5 +25,5 @@ struct stations
         this->stationName = sta->stationName;
     }
 };
-
+*/
 #endif
